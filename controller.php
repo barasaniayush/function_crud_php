@@ -4,25 +4,33 @@ function insertRecord()
 {
     include('config.php');
     $name = $_POST['name'];
-    $email = $_POST['email'];
+    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+    $dob = $_POST['dob'];
     $phone = $_POST['phone'];
     $address = $_POST['address'];
     $gender = $_POST['gender'];
 
-    if (!preg_match("/^[a-zA-z]*$/", $name)) {
-        echo "Only alphabets allowed";
+    if(filter_var($email, FILTER_VALIDATE_EMAIL) == FALSE) {
+        $emailErr = "Email format is invalid";
+    }
+
+    if (!preg_match("/^[a-zA-z ]*$/", $name)) {
+        $nameErr = "Only letters and white space allowed";
+        return false;
     }
 
     if (!preg_match("/^[0-9]*$/", $phone)) {
-        echo "Only number allowed";
+        $phoneErr = "Only number allowed";
+        return false;
     }
 
     if (!preg_match("/^[a-zA-z]*$/", $address)) {
-        echo "Only address allowed";
+        $addressErr = "Only letters and white space allowed";
+        return false;
     } else {
-        $sql = "INSERT INTO `student` (name, email, address, phone, gender) VALUES ('$name', '$email', '$address', '$phone', '$gender')";
+        $sql = "INSERT INTO `student` (name, email, dob, address, phone, gender) VALUES ('$name', '$email', '$dob', '$address', '$phone', '$gender')";
         if ($conn->query($sql) == TRUE) {
-            // header('location:index.php');
+            header('location:index.php');
         } else {
             echo "Error inserting data";
         }
@@ -52,11 +60,21 @@ function updateRecord($id)
 {
     include('config.php');
     $name = $_POST['name'];
-    $email = $_POST['email'];
+    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+    $dob = $_POST['dob'];
     $phone = $_POST['phone'];
     $address = $_POST['address'];
     $gender = $_POST['gender'];
     $editid = $_POST['hid'];
+
+    if(filter_var($email, FILTER_VALIDATE_EMAIL) == FALSE) {
+        $ErrMsg = "Email format is invalid";
+    }
+ 
+    if (strlen($phone) < 10 && strlen($phone) > 10) {  
+        $ErrMsg = "Mobile number must be only 10 digits";
+        return false;  
+    }
 
     if (!preg_match("/^[a-zA-z]*$/", $name)) {
         echo "Only alphabets allowed";
@@ -69,7 +87,7 @@ function updateRecord($id)
     if (!preg_match("/^[a-zA-z]*$/", $address)) {
         echo "Only address allowed";
     } else {
-        $sql = "UPDATE `student` SET name='$name', email='$email', address='$address', phone='$phone', gender='$gender' WHERE id='$editid'";
+        $sql = "UPDATE `student` SET name='$name', email='$email', dob='$dob', address='$address', phone='$phone', gender='$gender' WHERE id='$editid'";
         $result = mysqli_query($conn, $sql);
         if ($result) {
             header('location:index.php');

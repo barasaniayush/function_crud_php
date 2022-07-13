@@ -24,17 +24,19 @@ if (isset($_GET['deleteid'])) {
 
 <body>
     <nav class="navbar bg-dark">
-        <form class="container-fluid justify-content-start">
-        <a href="add.php"><button class="btn btn-success" type="button">Add New Student</button></a>
+        <form class="container-fluid justify-content-center">
+            <a href="add.php"><button class="btn btn-success mx-5" type="button">Add New Student</button></a>
+            <h3 style="color: white;">School Management System</h3>
         </form>
     </nav>
     <div class="container">
-        <h3 class="text-center my-3">List of Students</h3>
+        <h3 class="text-center my-5">List of Students</h3>
         <table class="table table-dark table-striped">
             <tr class="text-center">
                 <td>S.N.</td>
                 <td>Name</td>
                 <td>Email</td>
+                <td>Date of Birth</td>
                 <td>Address</td>
                 <td>Phone number</td>
                 <td>Gender</td>
@@ -42,19 +44,21 @@ if (isset($_GET['deleteid'])) {
             </tr>
             <?php
             $select = displayRecord();
+            $sn = 1;
             while ($data = mysqli_fetch_array($select)) {
             ?>
-                <tr class="text-center">
-                    <td><?php echo $data['id']; ?></td>
-                    <td><?php echo $data['name']; ?></td>
-                    <td><?php echo $data['email']; ?></td>
-                    <td><?php echo $data['address']; ?></td>
-                    <td><?php echo $data['phone']; ?></td>
-                    <td><?php echo $data['gender']; ?></td>
-                    <td><a href="add.php?updateid=<?php echo $data['id']; ?>"><button class="btn btn-success">Edit</button></a>
-                        <a href="index.php?deleteid=<?php echo $data['id']; ?>"><button class="btn btn-danger">Delete</button></a>
-                    </td>
-                </tr>
+            <tr class="text-center">
+                <td><?php echo $sn++; ?></td>
+                <td><?php echo $data['name']; ?></td>
+                <td><?php echo $data['email']; ?></td>
+                <td><?php echo $data['dob']; ?></td>
+                <td><?php echo $data['address']; ?></td>
+                <td><?php echo $data['phone']; ?></td>
+                <td><?php echo $data['gender']; ?></td>
+                <td><a href="add.php?updateid=<?php echo $data['id']; ?>"><button class="btn btn-success">Edit</button></a>
+                    <a href="index.php?deleteid=<?php echo $data['id']; ?>"><button class="btn btn-danger fa fa-trash">Delete</button></a>
+                </td>
+            </tr>
             <?php
             }
             ?>
