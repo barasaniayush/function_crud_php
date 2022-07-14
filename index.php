@@ -1,4 +1,5 @@
 <?php
+session_start();
 include('controller.php');
 if (isset($_POST['update'])) {
     updateRecord($id);
@@ -26,11 +27,20 @@ if (isset($_GET['deleteid'])) {
     <nav class="navbar bg-dark">
         <form class="container-fluid justify-content-center">
             <a href="add.php"><button class="btn btn-success mx-5" type="button">Add New Student</button></a>
-            <h3 style="color: white;">School Management System</h3>
         </form>
     </nav>
     <div class="container">
+        <h3 class="text-center my-3">School Management System</h3>
         <h3 class="text-center my-5">List of Students</h3>
+        <?php
+            if(isset($_SESSION['status'])) {
+                echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                '.$_SESSION['status'].'
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>';
+                unset($_SESSION['status']);
+            }
+        ?>
         <table class="table table-dark table-striped">
             <tr class="text-center">
                 <td>S.N.</td>
@@ -47,18 +57,18 @@ if (isset($_GET['deleteid'])) {
             $sn = 1;
             while ($data = mysqli_fetch_array($select)) {
             ?>
-            <tr class="text-center">
-                <td><?php echo $sn++; ?></td>
-                <td><?php echo $data['name']; ?></td>
-                <td><?php echo $data['email']; ?></td>
-                <td><?php echo $data['dob']; ?></td>
-                <td><?php echo $data['address']; ?></td>
-                <td><?php echo $data['phone']; ?></td>
-                <td><?php echo $data['gender']; ?></td>
-                <td><a href="add.php?updateid=<?php echo $data['id']; ?>"><button class="btn btn-success">Edit</button></a>
-                    <a href="index.php?deleteid=<?php echo $data['id']; ?>"><button class="btn btn-danger fa fa-trash">Delete</button></a>
-                </td>
-            </tr>
+                <tr class="text-center">
+                    <td><?php echo $sn++; ?></td>
+                    <td><?php echo $data['name']; ?></td>
+                    <td><?php echo $data['email']; ?></td>
+                    <td><?php echo $data['dob']; ?></td>
+                    <td><?php echo $data['address']; ?></td>
+                    <td><?php echo $data['phone']; ?></td>
+                    <td><?php echo $data['gender']; ?></td>
+                    <td><a href="add.php?updateid=<?php echo $data['id']; ?>"><button class="btn btn-success">Edit</button></a>
+                        <a href="index.php?deleteid=<?php echo $data['id']; ?>"><button class="btn btn-danger fa fa-trash">Delete</button></a>
+                    </td>
+                </tr>
             <?php
             }
             ?>
