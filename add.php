@@ -2,12 +2,10 @@
 session_start();
 include 'controller.php';
 
-//call insert function from controller    
 if (isset($_POST['submit'])) {
     insertRecord();
 }
 
-//call update function from controller
 if (isset($_POST['update'])) {
     updateRecord($id);
 }
@@ -15,6 +13,7 @@ if (isset($_POST['update'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -57,22 +56,30 @@ if (isset($_POST['update'])) {
                     <label for="">Phone</label>
                     <input type="text" name="phone" id="phone" value="<?php echo $myrecord['phone']; ?>" class="form-control"><br>
                 </div>
-
                 <div class="form-group">
                     <label for="">Gender:</label>
                     <input type="radio" name="gender" value="Male" id="male"> Male
-                    <input type="radio" name="gender" id="female" value="Female"> Female<br><br>
+                    <input type="radio" name="gender" id="female" value="Female"> Female<br>
                 </div>
                 <div class="form-group">
                     <input type="hidden" name="hid" value="<?php echo $myrecord['id']; ?>">
                     <input type="submit" value="Update" name="update" id="update" class="btn btn-primary">
                 </div>
-            </form><br>
+            </form>
         <?php
         } else {
         ?>
             <h3 class="my-5">Add New User</h3>
-            <form action="#" method="post">
+            <form action="" method="post">
+                <?php
+                    if (isset($_SESSION['all'])) {
+                        echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    ' . $_SESSION['all'] . '
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>';
+                        unset($_SESSION['all']);
+                    }
+                ?>
                 <div class="form-group">
                     <label for="">Name</label>
                     <input type="text" name="name" id="name" class="form-control" placeholder="Enter Full Name"><br>
@@ -96,13 +103,13 @@ if (isset($_POST['update'])) {
                 <div class="form-group">
                     <label for="">Gender:</label>
                     <input type="radio" name="gender" value="Male" id="male" checked> Male
-                    <input type="radio" name="gender" value="Female" id="female"> Female<br><br>
+                    <input type="radio" name="gender" value="Female" id="female"> Female<br>
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Submit" name="submit" id="name" class="btn btn-primary">
                 </div>
-            </form><br>
-        <?php } ?>
+            </form>
+        <?php } ?><br>
     </div>
 </body>
 

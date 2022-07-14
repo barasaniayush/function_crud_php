@@ -1,4 +1,5 @@
-<?php    
+<?php
+
 function insertRecord()
 {
     include('config.php');
@@ -9,38 +10,37 @@ function insertRecord()
     $address = $_POST['address'];
     $gender = $_POST['gender'];
     if (empty($_POST['name']) || empty($_POST['email']) || empty($_POST['address']) || empty($_POST['dob'])
-        || empty($_POST['phone']) || empty($_POST['gender'])
+        || empty($_POST['phone'])
     ) {
-        $nameErr = "Please fill all the field";
+        $_SESSION['all'] = "All field required";
         return false;
     }
-    
+
     if (filter_var($email, FILTER_SANITIZE_EMAIL) == FALSE) {
-        $emailErr = "Email format is invalid";
+        $_SESSION['all'] = "Invalid email";
         return false;
     }
 
     if (!preg_match("/^[a-zA-z ]*$/", $name)) {
-        $nameErr = "Name is invalid";
+        $_SESSION['all'] = "Invalid name inserted";
         return false;
     }
 
     if (!preg_match('/^[0-9]{10}+$/', $phone)) {
-        $phoneErr = "Only number allowed";
+        $_SESSION['all'] = "Phone number should be numeric and of 10 digit only";
         return false;
     }
 
     if (!preg_match("/^[a-zA-z ]*$/", $address)) {
-        $addressErr = "Address is invalid";
+        $_SESSION['all'] = "Address is invalid";
         return false;
     }
-    
     
     else {
         $sql = "INSERT INTO `student` (name, email, dob, address, phone, gender) VALUES ('$name', '$email', '$dob', '$address', '$phone', '$gender')";
         if ($conn->query($sql) == TRUE) 
         {
-            $_SESSION['status'] = "Data inserted successfully";
+            $_SESSION['msg'] = "Data inserted successfully";
             header('location:index.php');
         } else {
             echo "Error inserting data";
@@ -79,7 +79,7 @@ function updateRecord($id)
     $editid = $_POST['hid'];
 
     if (empty($_POST['name']) || empty($_POST['email']) || empty($_POST['address']) || empty($_POST['dob'])
-        || empty($_POST['phone']) || empty($_POST['gender'])
+        || empty($_POST['phone'])
     ) {
         $errMsg = "Please fill all the field";
         return false;
@@ -98,24 +98,6 @@ function updateRecord($id)
     if (!preg_match("/^[a-zA-Z ]*$/", $name)) {
         $nameErr =  "Only alphabets allowed";
         return false;  
-    }
-
-    if (!preg_match("/^[0-9]*$/", $phone)) {
-        $phoneErr = "Only number allowed";
-        return false;
-    }
-
-    if(!isset($_POST["gender"])){
-        $error = $error . "empty gender <br/>";
-    }
-    else{
-        $gender = $_POST["gender"];
-        if ($gender == "Male"){
-            $Mchecked = "checked";
-        }
-        else if ($gender == "Female"){
-            $Fchecked = "checked";
-        }
     }
 
     if (!preg_match("/^[a-zA-z ]*$/", $address)) {
@@ -139,7 +121,7 @@ function deleteRecord($deleteid)
     $sql = "DELETE FROM `student` WHERE id='$deleteid'";
     $result = mysqli_query($conn, $sql);
     if ($result) {
-        $_SESSION['status'] = "Data deleted successfully";
+        $_SESSION['check'] = "Data deleted successfully";
         header('location:index.php');
     } else {
         echo "Error";
