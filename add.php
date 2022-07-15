@@ -64,7 +64,7 @@ if (isset($_POST['update'])) {
                 </div>
                 <div class="form-group">
                     <label for="">Email</label>
-                    <input type="email" name="email" id="email" value="<?php echo $myrecord['email']; ?>" class="form-control"><br>
+                    <input type="text" name="email" id="email" value="<?php echo $myrecord['email']; ?>" class="form-control"><br>
                 </div>
                 <div class="form-group">
                     <label for="">Date of Birth</label>
@@ -80,8 +80,8 @@ if (isset($_POST['update'])) {
                 </div>
                 <div class="form-group">
                     <label for="">Gender:</label>
-                    <input type="radio" name="gender" value="male" id="male" <?php echo($myrecord['gender']=='male')?"male":"checked"; ?>> Male
-                    <input type="radio" name="gender" id="female" value="female" <?php echo($myrecord['gender']=='female')?"female":"checked"; ?>> Female<br>
+                    <input type="radio" name="gender" value="male" id="male" <?php echo($myrecord['gender']=='female')?"male":"checked"; ?>> Male
+                    <input type="radio" name="gender" id="female" value="female" <?php echo($myrecord['gender']=='male')?"female":"checked"; ?>> Female<br>
                 </div>
                 <div class="form-group">
                     <input type="hidden" name="hid" value="<?php echo $myrecord['id']; ?>">
@@ -108,7 +108,7 @@ if (isset($_POST['update'])) {
                 </div>
                 <div class="form-group">
                     <label for="">Email</label>
-                    <input type="email" name="email" id="email" class="form-control" placeholder="Enter Email Address "><br>
+                    <input type="text" name="email" id="email" class="form-control" placeholder="Enter Email Address "><br>
                 </div>
                 <div class="form-group">
                     <label for="">Date of Birth</label>
@@ -134,5 +134,4 @@ if (isset($_POST['update'])) {
         <?php } ?><br>
     </div>
 </body>
-
 </html>

@@ -65,7 +65,7 @@ if (isset($_GET['deleteid'])) {
             <?php
             $select = displayRecord();
             $sn = 1;
-            while ($data = mysqli_fetch_array($select)) {
+            while ($data = mysqli_fetch_assoc($select)) {
             ?>
                 <tr class="text-center">
                     <td><?php echo $sn++; ?></td>
@@ -75,8 +75,8 @@ if (isset($_GET['deleteid'])) {
                     <td><?php echo $data['address']; ?></td>
                     <td><?php echo $data['phone']; ?></td>
                     <td><?php echo $data['gender']; ?></td>
-                    <td><a href="add.php?updateid=<?php echo $data['id']; ?>"><button class="btn btn-success">Edit</button></a>
-                        <a href="index.php?deleteid=<?php echo $data['id']; ?>"><button class="btn btn-danger fa fa-trash">Delete</button></a>
+                    <td><a href="add.php?updateid=<?php echo $data["id"]; ?>"><button class="btn btn-success">Edit</button></a>
+                        <a href="index.php?deleteid=<?php echo $data["id"]; ?>"><button class="btn btn-danger fa fa-trash">Delete</button></a>
                     </td>
                 </tr>
             <?php
@@ -85,5 +85,4 @@ if (isset($_GET['deleteid'])) {
         </table>
     </div>
 </body>
-
 </html>

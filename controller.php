@@ -1,9 +1,7 @@
 <?php
-
+include('config.php');
 function insertRecord($name, $email, $dob, $phone, $address, $gender)
 {
-    include('config.php');
-
     if (empty($_POST['name']) || empty($_POST['email']) || empty($_POST['address']) || empty($_POST['dob'])
         || empty($_POST['phone'])
     ) {
@@ -17,7 +15,7 @@ function insertRecord($name, $email, $dob, $phone, $address, $gender)
     }
 
     if (!preg_match("/^[a-zA-z ]*$/", $name)) {
-        $_SESSION['all'] = "Invalid name inserted";
+        $_SESSION['all'] = "Name is invalid. Please enter alphabets only";
         return false;
     }
 
@@ -27,44 +25,43 @@ function insertRecord($name, $email, $dob, $phone, $address, $gender)
     }
 
     if (!preg_match("/^[a-zA-z ]*$/", $address)) {
-        $_SESSION['all'] = "Address is invalid";
+        $_SESSION['all'] = "Address is invalid. Please enter alphabets only";
         return false;
     }
     
     else {
         $sql = "INSERT INTO `student` (name, email, dob, address, phone, gender) VALUES ('$name', '$email', '$dob', '$address', '$phone', '$gender')";
-        if ($conn->query($sql) == TRUE) 
+        if ($GLOBALS['conn']->query($sql) == TRUE) 
         {
             $_SESSION['msg'] = "Data inserted successfully";
             header('location:index.php');
         } else {
-            echo "Error inserting data";
+            echo mysqli_error($GLOBALS['conn']);
         }
     }
 }
 
 function displayRecord()
 {
-    include('config.php');
     $sql = "SELECT * FROM `student`";
-    $result = mysqli_query($conn, $sql);
+    $result = mysqli_query($GLOBALS['conn'], $sql);
     return $result;
 }
 
 function displayRecordById($updateid)
 {
-    include('config.php');
     $sql = "SELECT * FROM `student` WHERE id='$updateid'";
-    $result = mysqli_query($conn, $sql);
+    $result = mysqli_query($GLOBALS['conn'], $sql);
     if ($result->num_rows == 1) {
         $row = $result->fetch_assoc();
         return $row;
+    } else {
+       echo mysqli_error($GLOBALS['conn']);
     }
 }
 
 function updateRecord($id, $name, $email, $dob, $phone, $address, $gender)
 {
-    include('config.php');
     if (empty($_POST['name']) || empty($_POST['email']) || empty($_POST['address']) || empty($_POST['dob'])
         || empty($_POST['phone']) || empty($_POST['gender'])
     ) {
@@ -73,44 +70,43 @@ function updateRecord($id, $name, $email, $dob, $phone, $address, $gender)
     }
 
     if (filter_var($email, FILTER_VALIDATE_EMAIL) == FALSE) {
-        $emailErr = "Email format is invalid";
+        $_SESSION['update'] = "Email format is invalid";
         return false;
     }
 
     if(!preg_match('/^[0-9]{10}+$/', $phone)) {
-        $phoneErr = "Only number allowed";
+        $_SESSION['update'] = "Phone number should only contain numeric value";
         return false;
     }
 
     if (!preg_match("/^[a-zA-Z ]*$/", $name)) {
-        $nameErr =  "Only alphabets allowed";
+        $_SESSION['update'] = "Name is invalid";
         return false;  
     }
 
     if (!preg_match("/^[a-zA-z ]*$/", $address)) {
-        $addressErr = "Only address allowed";
+        $_SESSION['update'] = "Address is invalid";
         return false;
     } else {
         $sql = "UPDATE `student` SET name='$name', email='$email', dob='$dob', address='$address', phone='$phone', gender='$gender' WHERE id='$id'";
-        $result = mysqli_query($conn, $sql);
+        $result = mysqli_query($GLOBALS['conn'], $sql);
         if ($result) {
             $_SESSION['status'] = "Data updated successfully";
             header('location:index.php');
         } else {
-            header('location:index.php');
+            echo mysqli_error($GLOBALS['conn']);
         }
     }
 }
 
 function deleteRecord($deleteid)
 {
-    include('config.php');
     $sql = "DELETE FROM `student` WHERE id='$deleteid'";
-    $result = mysqli_query($conn, $sql);
+    $result = mysqli_query($GLOBALS['conn'], $sql);
     if ($result) {
         $_SESSION['status'] = "Data deleted successfully";
         header('location:index.php');
     } else {
-        echo "Error";
+        echo mysqli_error($GLOBALS['conn']);
     }
 }
