@@ -13,7 +13,6 @@ if (isset($_GET['deleteid'])) {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,23 +32,23 @@ if (isset($_GET['deleteid'])) {
         <h3 class="text-center my-3">School Management System</h3>
         <h3 class="text-center my-5">List of Students</h3>
         <?php
-            if(isset($_SESSION['status'])) {
-                echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-                '.$_SESSION['status'].'
+        if (isset($_SESSION['status'])) {
+            echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                ' . $_SESSION['status'] . '
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>';
             unset($_SESSION['status']);
-            }
+        }
         ?>
 
         <?php
-            if(isset($_SESSION['msg'])) {
-                echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-                '.$_SESSION['msg'].'
+        if (isset($_SESSION['msg'])) {
+            echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                ' . $_SESSION['msg'] . '
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>';
             unset($_SESSION['msg']);
-            }
+        }
         ?>
         <table class="table table-dark table-striped">
             <tr class="text-center">
@@ -63,20 +62,21 @@ if (isset($_GET['deleteid'])) {
                 <td>Action</td>
             </tr>
             <?php
-            $select = displayRecord();
+            $data = displayRecord();
             $sn = 1;
-            while ($data = mysqli_fetch_assoc($select)) {
+            foreach ($data as $value) {
             ?>
                 <tr class="text-center">
                     <td><?php echo $sn++; ?></td>
-                    <td><?php echo $data['name']; ?></td>
-                    <td><?php echo $data['email']; ?></td>
-                    <td><?php echo $data['dob']; ?></td>
-                    <td><?php echo $data['address']; ?></td>
-                    <td><?php echo $data['phone']; ?></td>
-                    <td><?php echo $data['gender']; ?></td>
-                    <td><a href="add.php?updateid=<?php echo $data["id"]; ?>"><button class="btn btn-success">Edit</button></a>
-                        <a href="index.php?deleteid=<?php echo $data["id"]; ?>"><button class="btn btn-danger fa fa-trash">Delete</button></a>
+                    <td><?php echo $value['name']; ?></td>
+                    <td><?php echo $value['email']; ?></td>
+                    <td><?php echo $value['dob']; ?></td>
+                    <td><?php echo $value['address']; ?></td>
+                    <td><?php echo $value['phone']; ?></td>
+                    <td><?php echo $value['gender']; ?></td>
+                    <td>
+                        <a href="add.php?updateid=<?php echo $value['id']; ?>"><button class="btn btn-primary">Edit</button></a>
+                        <a href="index.php?deleteid=<?php echo $value['id']; ?>"><button class="btn btn-danger">Delete</button></a>
                     </td>
                 </tr>
             <?php

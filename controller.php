@@ -45,7 +45,12 @@ function displayRecord()
 {
     $sql = "SELECT * FROM `student`";
     $result = mysqli_query($GLOBALS['conn'], $sql);
-    return $result;
+    if($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+        return $data;
+    }
 }
 
 function displayRecordById($updateid)
