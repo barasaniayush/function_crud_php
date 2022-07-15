@@ -29,8 +29,8 @@ if (isset($_GET['deleteid'])) {
         </form>
     </nav>
     <div class="container">
-        <h3 class="text-center my-3">School Management System</h3>
-        <h3 class="text-center my-5">List of Students</h3>
+        <h3 class="text-center my-5">School Management System</h3>
+        <h3 class="text-center my-3">List of Students</h3>
         <?php
         if (isset($_SESSION['status'])) {
             echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">

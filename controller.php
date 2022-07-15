@@ -5,11 +5,11 @@ function insertRecord($name, $email, $dob, $phone, $address, $gender)
     if (empty($_POST['name']) || empty($_POST['email']) || empty($_POST['address']) || empty($_POST['dob'])
         || empty($_POST['phone'])
     ) {
-        $_SESSION['all'] = "All field required";
+        $_SESSION['all'] = "Please fill all field";
         return false;
     }
 
-    if (filter_var($email, FILTER_SANITIZE_EMAIL) == FALSE) {
+    if (filter_var($email, FILTER_VALIDATE_EMAIL) == FALSE) {
         $_SESSION['all'] = "Invalid email";
         return false;
     }
@@ -112,7 +112,7 @@ function deleteRecord($deleteid)
     $sql = "DELETE FROM `student` WHERE id='$deleteid'";
     $result = mysqli_query($GLOBALS['conn'], $sql);
     if ($result) {
-        $_SESSION['st'] = "Data deleted successfully";
+        echo "Data deleted successfully";
         header('location:index.php');
     } else {
         echo mysqli_error($GLOBALS['conn']);

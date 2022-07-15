@@ -26,7 +26,6 @@ if (isset($_POST['update'])) {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -78,10 +77,10 @@ if (isset($_POST['update'])) {
                     <label for="">Phone</label>
                     <input type="text" name="phone" id="phone" value="<?php echo $myrecord['phone']; ?>" class="form-control"><br>
                 </div>
-                <div class="form-group">
+                <div class="form-group">                    
                     <label for="">Gender:</label>
                     <input type="radio" name="gender" value="male" id="male" <?php echo($myrecord['gender']=='female')?"male":"checked"; ?>> Male
-                    <input type="radio" name="gender" id="female" value="female" <?php echo($myrecord['gender']=='male')?"female":"checked"; ?>> Female<br>
+                    <input type="radio" name="gender" id="female" value="female" <?php echo($myrecord['gender']=='male')?"female":"checked"; ?>> Female<br><br>
                 </div>
                 <div class="form-group">
                     <input type="hidden" name="hid" value="<?php echo $myrecord['id']; ?>">
@@ -124,8 +123,8 @@ if (isset($_POST['update'])) {
                 </div>
                 <div class="form-group">
                     <label for="">Gender:</label>
-                    <input type="radio" name="gender" value="male" id="male" checked> Male
-                    <input type="radio" name="gender" value="female" id="female"> Female<br>
+                    <input type="radio" name="gender" value="Male" id="male" checked> Male
+                    <input type="radio" name="gender" value="Female" id="female"> Female<br><br>
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Submit" name="submit" id="name" class="btn btn-primary">
