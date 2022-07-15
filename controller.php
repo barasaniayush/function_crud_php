@@ -50,6 +50,8 @@ function displayRecord()
             $data[] = $row;
         }
         return $data;
+    } else {
+        echo mysqli_error($GLOBALS['conn']);
     }
 }
 
@@ -61,7 +63,8 @@ function displayRecordById($updateid)
         $row = $result->fetch_assoc();
         return $row;
     } else {
-       echo mysqli_error($GLOBALS['conn']);
+       die(mysqli_error($GLOBALS['conn']));
+
     }
 }
 
@@ -109,7 +112,7 @@ function deleteRecord($deleteid)
     $sql = "DELETE FROM `student` WHERE id='$deleteid'";
     $result = mysqli_query($GLOBALS['conn'], $sql);
     if ($result) {
-        $_SESSION['status'] = "Data deleted successfully";
+        $_SESSION['st'] = "Data deleted successfully";
         header('location:index.php');
     } else {
         echo mysqli_error($GLOBALS['conn']);
