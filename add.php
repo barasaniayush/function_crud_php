@@ -3,11 +3,24 @@ session_start();
 include 'controller.php';
 
 if (isset($_POST['submit'])) {
-    insertRecord();
+    $name = $_POST['name'];
+    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+    $dob = $_POST['dob'];
+    $phone = filter_var($_POST['phone'], FILTER_SANITIZE_NUMBER_INT);
+    $address = $_POST['address'];
+    $gender = $_POST['gender'];
+    insertRecord($name, $email, $dob, $phone, $address, $gender);
 }
 
 if (isset($_POST['update'])) {
-    updateRecord($id);
+    $name = $_POST['name'];
+    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+    $dob = $_POST['dob'];
+    $phone = filter_var($_POST['phone'], FILTER_SANITIZE_NUMBER_INT);
+    $address = $_POST['address'];
+    $gender = $_POST['gender'];
+    $id = $_POST['hid'];
+    updateRecord($id, $name, $email, $dob, $phone, $address, $gender);
 }
 ?>
 
@@ -35,6 +48,15 @@ if (isset($_POST['update'])) {
             $myrecord = displayRecordById($updateid);
         ?>
             <h3 class="my-3">Update Record</h3>
+            <?php
+            if(isset($_SESSION['update'])) {
+                echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                '.$_SESSION['update'].'
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>';
+            unset($_SESSION['update']);
+            }
+            ?>
             <form action="#" method="post">
                 <div class="form-group">
                     <label for="">Name</label>
@@ -58,8 +80,8 @@ if (isset($_POST['update'])) {
                 </div>
                 <div class="form-group">
                     <label for="">Gender:</label>
-                    <input type="radio" name="gender" value="Male" id="male"> Male
-                    <input type="radio" name="gender" id="female" value="Female"> Female<br>
+                    <input type="radio" name="gender" value="male" id="male" <?php echo($myrecord['gender']=='male')?"male":"checked"; ?>> Male
+                    <input type="radio" name="gender" id="female" value="female" <?php echo($myrecord['gender']=='female')?"female":"checked"; ?>> Female<br>
                 </div>
                 <div class="form-group">
                     <input type="hidden" name="hid" value="<?php echo $myrecord['id']; ?>">
@@ -70,14 +92,14 @@ if (isset($_POST['update'])) {
         } else {
         ?>
             <h3 class="my-5">Add New User</h3>
-            <form action="" method="post">
+            <form action="#" method="post">
                 <?php
                     if (isset($_SESSION['all'])) {
                         echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    ' . $_SESSION['all'] . '
+                    '.$_SESSION['all'].'
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>';
-                        unset($_SESSION['all']);
+                    unset($_SESSION['all']);
                     }
                 ?>
                 <div class="form-group">
@@ -102,8 +124,8 @@ if (isset($_POST['update'])) {
                 </div>
                 <div class="form-group">
                     <label for="">Gender:</label>
-                    <input type="radio" name="gender" value="Male" id="male" checked> Male
-                    <input type="radio" name="gender" value="Female" id="female"> Female<br>
+                    <input type="radio" name="gender" value="male" id="male" checked> Male
+                    <input type="radio" name="gender" value="female" id="female"> Female<br>
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Submit" name="submit" id="name" class="btn btn-primary">

@@ -1,14 +1,9 @@
 <?php
 
-function insertRecord()
+function insertRecord($name, $email, $dob, $phone, $address, $gender)
 {
     include('config.php');
-    $name = $_POST['name'];
-    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-    $dob = $_POST['dob'];
-    $phone = filter_var($_POST['phone'], FILTER_SANITIZE_NUMBER_INT);
-    $address = $_POST['address'];
-    $gender = $_POST['gender'];
+
     if (empty($_POST['name']) || empty($_POST['email']) || empty($_POST['address']) || empty($_POST['dob'])
         || empty($_POST['phone'])
     ) {
@@ -67,21 +62,13 @@ function displayRecordById($updateid)
     }
 }
 
-function updateRecord($id)
+function updateRecord($id, $name, $email, $dob, $phone, $address, $gender)
 {
     include('config.php');
-    $name = $_POST['name'];
-    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-    $dob = $_POST['dob'];
-    $phone = filter_var($_POST['phone'], FILTER_SANITIZE_NUMBER_INT);
-    $address = $_POST['address'];
-    $gender = $_POST['gender'];
-    $editid = $_POST['hid'];
-
     if (empty($_POST['name']) || empty($_POST['email']) || empty($_POST['address']) || empty($_POST['dob'])
-        || empty($_POST['phone'])
+        || empty($_POST['phone']) || empty($_POST['gender'])
     ) {
-        $errMsg = "Please fill all the field";
+        $_SESSION['update'] = "All field required";
         return false;
     }
 
@@ -104,7 +91,7 @@ function updateRecord($id)
         $addressErr = "Only address allowed";
         return false;
     } else {
-        $sql = "UPDATE `student` SET name='$name', email='$email', dob='$dob', address='$address', phone='$phone', gender='$gender' WHERE id='$editid'";
+        $sql = "UPDATE `student` SET name='$name', email='$email', dob='$dob', address='$address', phone='$phone', gender='$gender' WHERE id='$id'";
         $result = mysqli_query($conn, $sql);
         if ($result) {
             $_SESSION['status'] = "Data updated successfully";
@@ -121,7 +108,7 @@ function deleteRecord($deleteid)
     $sql = "DELETE FROM `student` WHERE id='$deleteid'";
     $result = mysqli_query($conn, $sql);
     if ($result) {
-        $_SESSION['check'] = "Data deleted successfully";
+        $_SESSION['status'] = "Data deleted successfully";
         header('location:index.php');
     } else {
         echo "Error";

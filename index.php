@@ -2,7 +2,7 @@
 session_start();
 include('controller.php');
 if (isset($_POST['update'])) {
-    updateRecord($id);
+    updateRecord($id, $name, $email, $dob, $phone, $address, $gender);
 }
 
 if (isset($_GET['deleteid'])) {
@@ -49,16 +49,6 @@ if (isset($_GET['deleteid'])) {
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>';
             unset($_SESSION['msg']);
-            }
-        ?>
-
-        <?php
-            if(isset($_SESSION['check'])) {
-                echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-                '.$_SESSION['check'].'
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>';
-            unset($_SESSION['check']);
             }
         ?>
         <table class="table table-dark table-striped">
