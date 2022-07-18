@@ -1,12 +1,12 @@
 <?php
 session_start();
-include('controller.php');
+include('student.php');
 if (isset($_POST['update'])) {
     updateRecord($id, $name, $email, $dob, $phone, $address, $gender);
 }
 
-if (isset($_GET['deleteid'])) {
-    $deleteid = $_GET['deleteid'];
+if (isset($_REQUEST['deleteid'])) {
+    $deleteid = $_REQUEST['deleteid'];
     deleteRecord($deleteid);
 }
 ?>
@@ -32,6 +32,16 @@ if (isset($_GET['deleteid'])) {
         <h3 class="text-center my-5">School Management System</h3>
         <h3 class="text-center my-3">List of Students</h3>
         <?php
+        if (isset($_SESSION['del'])) {
+            echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                ' . $_SESSION['del'] . '
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>';
+            unset($_SESSION['del']);
+        }
+        ?>
+
+        <?php
         if (isset($_SESSION['status'])) {
             echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
                 ' . $_SESSION['status'] . '
@@ -55,7 +65,6 @@ if (isset($_GET['deleteid'])) {
                 <td>S.N.</td>
                 <td>Name</td>
                 <td>Email</td>
-                <td>Date of Birth</td>
                 <td>Address</td>
                 <td>Phone number</td>
                 <td>Gender</td>
@@ -70,7 +79,6 @@ if (isset($_GET['deleteid'])) {
                     <td><?php echo $sn++; ?></td>
                     <td><?php echo $value['name']; ?></td>
                     <td><?php echo $value['email']; ?></td>
-                    <td><?php echo $value['dob']; ?></td>
                     <td><?php echo $value['address']; ?></td>
                     <td><?php echo $value['phone']; ?></td>
                     <td><?php echo $value['gender']; ?></td>

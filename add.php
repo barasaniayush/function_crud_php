@@ -1,26 +1,24 @@
 <?php
 session_start();
-include 'controller.php';
+include 'student.php';
 
 if (isset($_POST['submit'])) {
     $name = $_POST['name'];
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-    $dob = $_POST['dob'];
     $phone = filter_var($_POST['phone'], FILTER_SANITIZE_NUMBER_INT);
     $address = $_POST['address'];
     $gender = $_POST['gender'];
-    insertRecord($name, $email, $dob, $phone, $address, $gender);
+    insertRecord($name, $email, $phone, $address, $gender);
 }
 
 if (isset($_POST['update'])) {
     $name = $_POST['name'];
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-    $dob = $_POST['dob'];
     $phone = filter_var($_POST['phone'], FILTER_SANITIZE_NUMBER_INT);
     $address = $_POST['address'];
     $gender = $_POST['gender'];
     $id = $_POST['hid'];
-    updateRecord($id, $name, $email, $dob, $phone, $address, $gender);
+    updateRecord($id, $name, $email, $phone, $address, $gender);
 }
 ?>
 
@@ -66,10 +64,6 @@ if (isset($_POST['update'])) {
                     <input type="text" name="email" id="email" value="<?php echo $myrecord['email']; ?>" class="form-control"><br>
                 </div>
                 <div class="form-group">
-                    <label for="">Date of Birth</label>
-                    <input type="date" name="dob" id="dob" value="<?php echo $myrecord['dob']; ?>" class="form-control"><br>
-                </div>
-                <div class="form-group">
                     <label for="">Address</label>
                     <input type="text" name="address" id="address" value="<?php echo $myrecord['address']; ?>" class="form-control"><br>
                 </div>
@@ -110,10 +104,6 @@ if (isset($_POST['update'])) {
                     <input type="text" name="email" id="email" class="form-control" placeholder="Enter Email Address "><br>
                 </div>
                 <div class="form-group">
-                    <label for="">Date of Birth</label>
-                    <input type="date" name="dob" id="dob" class="form-control"><br>
-                </div>
-                <div class="form-group">
                     <label for="">Address</label>
                     <input type="text" name="address" id="address" class="form-control" placeholder="Enter address"><br>
                 </div>
@@ -123,8 +113,8 @@ if (isset($_POST['update'])) {
                 </div>
                 <div class="form-group">
                     <label for="">Gender:</label>
-                    <input type="radio" name="gender" value="Male" id="male" checked> Male
-                    <input type="radio" name="gender" value="Female" id="female"> Female<br><br>
+                    <input type="radio" name="gender" value="male" id="male" checked> Male
+                    <input type="radio" name="gender" value="female" id="female"> Female<br><br>
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Submit" name="submit" id="name" class="btn btn-primary">
